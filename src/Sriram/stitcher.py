@@ -152,11 +152,14 @@ class PanaromaStitcher():
 
         for i in range(1, len(images)-reference_idx):
             panorama = self.stitch_images(images[reference_idx-i], panorama)
-            # panorama = crop_black_borders(panorama)
-            cv2.imwrite(f"stitched_mix_{i}_left.jpg", panorama)
-            panorama = self.stitch_images(images[reference_idx+i], panorama)
             panorama = self.crop_black_borders(panorama)
-            cv2.imwrite(f"stitched_mix_{i}.jpg", panorama)
+            cv2.imwrite(f"stitched_mix_{i}_left.jpg", panorama)
+            try:
+                panorama = self.stitch_images(images[reference_idx+i], panorama)
+                panorama = self.crop_black_borders(panorama)
+                cv2.imwrite(f"stitched_mix_{i}.jpg", panorama)
+            except:
+                return panorama
 
         if len(images) % 2 == 0:
             panorama = self.stitch_images(images[0], panorama)
@@ -182,7 +185,6 @@ class PanaromaStitcher():
             if img is not None:
                 images.append(img)
                 
-    
 
         # Stitch the images into a panorama
         stitched_image = self.stitch_multiple_images(images)
