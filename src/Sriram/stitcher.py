@@ -152,11 +152,11 @@ class PanaromaStitcher():
 
         for i in range(1, len(images)-reference_idx):
             panorama = self.stitch_images(images[reference_idx-i], panorama)
-            panorama = self.crop_black_borders(panorama)
+            panorama_ = self.crop_black_borders(panorama)
             cv2.imwrite(f"stitched_mix_{i}_left.jpg", panorama)
             try:
-                panorama = self.stitch_images(images[reference_idx+i], panorama)
-                panorama = self.crop_black_borders(panorama)
+                panorama_ = self.stitch_images(images[reference_idx+i], panorama_)
+                panorama = self.crop_black_borders(panorama_)
                 cv2.imwrite(f"stitched_mix_{i}.jpg", panorama)
             except:
                 return panorama
