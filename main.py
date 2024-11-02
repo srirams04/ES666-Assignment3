@@ -1,7 +1,7 @@
 import pdb
 import src
 import glob
-import importlib
+import importlib.util as ut
 import os
 import cv2
 
@@ -18,8 +18,8 @@ for idx,algo in enumerate(all_submissions):
     try:
         module_name = '{}_{}'.format(algo.split(os.sep)[-1],'stitcher')
         filepath = '{}{}stitcher.py'.format( algo,os.sep,'stitcher.py')
-        spec = importlib.util.spec_from_file_location(module_name, filepath)
-        module = importlib.util.module_from_spec(spec)
+        spec = ut.spec_from_file_location(module_name, filepath)
+        module = ut.module_from_spec(spec)
         spec.loader.exec_module(module)
         PanaromaStitcher = getattr(module, 'PanaromaStitcher')
         inst = PanaromaStitcher()
