@@ -100,8 +100,6 @@ class PanaromaStitcher():
         corners_img2 = np.float32([[0, 0], [0, h2], [w2, h2], [w2, 0]]).reshape(-1, 1, 2)
         
         # Combine all corners to get the bounding box
-        print("Warped corners")
-        print(warped_corners)
         all_corners = np.concatenate((warped_corners, corners_img2), axis=0)
         [x_min, y_min] = np.int32(all_corners.min(axis=0).ravel() - 0.5)
         [x_max, y_max] = np.int32(all_corners.max(axis=0).ravel() + 0.5)
@@ -144,7 +142,7 @@ class PanaromaStitcher():
     def stitch_multiple_images(self, images):
         reference_idx = len(images) // 2
         # reference_idx = 0
-        print(reference_idx, len(images))
+    
         panorama = images[reference_idx]
         
         # for i in range(1, len(images)):
@@ -184,7 +182,7 @@ class PanaromaStitcher():
             if img is not None:
                 images.append(img)
                 
-        print(images)
+    
 
         # Stitch the images into a panorama
         stitched_image = self.stitch_multiple_images(images)
